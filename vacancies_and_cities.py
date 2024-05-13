@@ -5,10 +5,8 @@ df = pd.read_csv('vacancies.csv')
 city_counts = df['city'].value_counts()
 
 plt.figure(figsize=(10, 6))
-city_counts.plot(kind='bar', color='skyblue')
+city_counts.plot(kind='pie', colors=['skyblue', 'lightgreen', 'lightcoral', 'orange', 'yellow'], autopct='%1.1f%%')
 plt.title('Кількість вакансій за містами')
-plt.xlabel('Місто')
-plt.ylabel('Кількість вакансій')
-plt.xticks(rotation=45, ha='right')
+plt.axis('equal')  # Рівність вісей для зображення кола
 plt.tight_layout()
 plt.show()
