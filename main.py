@@ -10,12 +10,14 @@ BASE_URL_PY = "https://www.work.ua/jobs-python/"
 list_of_works = []
 list_of_vacs = []
 
+
 @dataclass
 class Vacancy:
     title: str
     city: str
     salary: str
     skills: list
+
 
 async def get_vac_url():
     async with aiohttp.ClientSession() as session:
@@ -32,6 +34,7 @@ async def get_vac_url():
                     for work in works:
                         vac_url = work.select_one(".add-bottom > h2 > a").get("href")
                         list_of_works.append(BASE_URL + vac_url)
+
 
 async def get_vacs_all(list_of_works):
     async with aiohttp.ClientSession() as session:
@@ -64,6 +67,7 @@ async def get_vacs_all(list_of_works):
                 vac = Vacancy(title, city, salary, skills_list)
                 list_of_vacs.append(vac.__dict__)
 
+
 async def main():
     await get_vac_url()
     await get_vacs_all(list_of_works)
@@ -71,4 +75,3 @@ async def main():
     df.to_csv('vacancies.csv', index=False)
 
 asyncio.run(main())
-
