@@ -43,7 +43,7 @@ async def get_vacs_all(list_of_works):
                 html = await response.text()
                 soup = bs4.BeautifulSoup(html, "html.parser")
                 title = soup.find(id="h1-name").text
-                salary_paragraph = soup.select_one("p.text-indent.mt-sm span.glyphicon.glyphicon-hryvnia.text-default.glyphicon-large")
+                salary_paragraph = soup.select_one("span.strong-500")
                 salary = "Не вказана"
                 if salary_paragraph:
                     salary_text = salary_paragraph.parent.text
@@ -55,12 +55,12 @@ async def get_vacs_all(list_of_works):
                                 salary = (salary[:(int(len(salary) / 2))] + " - " + salary[(int(len(salary) / 2)):])
                             else:
                                 salary = (salary[:int(len(salary) / 2)] + " - " + salary[int(len(salary) / 2):])
-                city_paragraph = soup.select_one("p.text-indent.mt-sm span.glyphicon.glyphicon-map-marker.text-default.glyphicon-large")
+                city_paragraph = soup.select_one("li.text-indent.mt-sm span.glyphicon.glyphicon-map-marker.text-default.glyphicon-large")
                 if city_paragraph:
                     city = city_paragraph.parent.text.split()[0]
                     if "," in city:
                         city = city[:-1]
-                skills = soup.select(".flex.flex-wrap.w-100.toggle-block.overflow.block-relative.js-toggle-block > span")
+                skills = soup.select(".mt-2xl.flex.flex-wrap > ul > li > span")
                 skills_list = []
                 for skill in skills:
                     skills_list.append(skill.text)
